@@ -1,0 +1,8 @@
+parameter1: CONSTANT3
+parameter2:
+  parameter21: value21
+  parameter22: value22
+parameter3: value3
+parameter4:
+  - value41
+  - value42

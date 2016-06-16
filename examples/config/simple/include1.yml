@@ -1,0 +1,7 @@
+parameter1: include1_value1
+include1_parameter1: include1_value1
+include1_parameter2: include1_value2
+include1_parameter3: include1_value3
+include1_parameterc: CONSTANT
+include1_parameterp: "%parameter2%"
+include1_parameterp2: "%include2.parameter3%"

@@ -1,0 +1,23 @@
+{
+    "name": "pmaxs/config",
+    "type": "library",
+    "description": "Library for loading configs (yaml, xml, ini). Supports imports, constants and parameters (Symfony DI style %parameter%).",
+    "homepage": "https://github.com/pmaxs/config",
+    "keywords": ["config", "silex", "symfony"],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "zendframework/zend-config": "^2.0",
+        "symfony/config": "^3.1",
+        "symfony/property-access": "^3.1"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pmaxs\\Config\\": "src/"
+        }
+    }
+}

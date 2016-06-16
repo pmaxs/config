@@ -1,0 +1,6 @@
+parameter1: "%ini.parameter1%"
+parameter2: "%ini.xml.parameter1%"
+parameter3: "%ini.xml.yml.parameter1%"
+
+imports:
+  - { resource: ini.ini, prefix: "ini" }

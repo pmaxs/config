@@ -1,0 +1,12 @@
+parameter1: value1
+parameter2: value2
+parameter3: value3
+parameterc: CONSTANT
+parameterp: "%parameterc%"
+
+imports:
+  -
+    resource: include1.yml
+  -
+    resource: include2.yml
+    prefix: include2
