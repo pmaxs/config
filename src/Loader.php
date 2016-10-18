@@ -19,10 +19,16 @@ class Loader extends DelegatingLoader
     protected $processors;
 
     /**
+     * @var array vars
+     */
+    protected $vars = [];
+
+    /**
      * Constructor.
      * @param mixed $paths paths to configs
+     * @param mixed $vars init vars
      */
-    public function __construct($paths = null)
+    public function __construct($paths = null, array $vars = [])
     {
         // resolver
         $this->resolver = new LoaderResolver();
@@ -35,15 +41,19 @@ class Loader extends DelegatingLoader
 
         // processors
         $this->processors = $this->getDefaultProcessors();
+
+        // vars
+        $this->addVars($vars);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      * @param mixed $resources
      */
     public function load($resources, $type = null)
     {
         $config = new Config();
+        $config->setData($this->vars);
 
         foreach ((array)$resources as $resource) {
             $config->merge(parent::load($resource, $type));
@@ -87,6 +97,19 @@ class Loader extends DelegatingLoader
     }
 
     /**
+     * Returns default loaders.
+     * @return array
+     */
+    public function getDefaultFileLoaders(FileLocatorInterface $locator)
+    {
+        return array(
+            new \Pmaxs\Config\Loader\YamlLoader($locator),
+            new \Pmaxs\Config\Loader\IniLoader($locator),
+            new \Pmaxs\Config\Loader\XmlLoader($locator),
+        );
+    }
+
+    /**
      * Adds processor.
      * @param ProcessorInterface $processor
      * @return $this
@@ -117,19 +140,6 @@ class Loader extends DelegatingLoader
     }
 
     /**
-     * Returns default loaders.
-     * @return array
-     */
-    public function getDefaultFileLoaders(FileLocatorInterface $locator)
-    {
-        return array(
-            new \Pmaxs\Config\Loader\YamlLoader($locator),
-            new \Pmaxs\Config\Loader\IniLoader($locator),
-            new \Pmaxs\Config\Loader\XmlLoader($locator),
-        );
-    }
-
-    /**
      * Returns default processors.
      * @return array
      */
@@ -139,5 +149,35 @@ class Loader extends DelegatingLoader
             new \Pmaxs\Config\Processor\Constant(),
             new \Pmaxs\Config\Processor\Parameter(),
         );
+    }
+
+    /**
+     * Adds vars.
+     * @param array $vars
+     * @return $this
+     */
+    public function addVars(array $vars = [])
+    {
+        $this->vars = array_merge($this->vars, $vars);
+        return $this;
+    }
+
+    /**
+     * Clears vars.
+     * @return $this
+     */
+    public function clearVars()
+    {
+        $this->vars = [];
+        return $this;
+    }
+
+    /**
+     * Returns vars.
+     * @return array vars
+     */
+    public function getVars()
+    {
+        return $this->vars;
     }
 }
